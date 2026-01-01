@@ -601,7 +601,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
             if slotName and itemData.id then
                 local item = findInventoryItemByFullType(itemData.id)
                 if not item then
-                    item = InventoryItemFactory.CreateItem(itemData.id)
+                    item = instanceItem(itemData.id)
                     if item then
                         isoPlayer:getInventory():AddItem(item)
                     end
@@ -625,7 +625,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
             if not isoPlayer:getWornItem(slotName) then -- Don't overwrite if already restored
                 local item = findInventoryItemByFullType(itemData.id)
                 if not item then
-                    item = InventoryItemFactory.CreateItem(itemData.id)
+                    item = instanceItem(itemData.id)
                     if item then
                         isoPlayer:getInventory():AddItem(item)
                     end
@@ -651,7 +651,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
             -- Create the item and use its inherent body location when possible
             local item = findInventoryItemByFullType(entry.id)
             if not item then
-                item = InventoryItemFactory.CreateItem(entry.id)
+                item = instanceItem(entry.id)
                 if item then isoPlayer:getInventory():AddItem(item) end
             end
             if item then
@@ -1149,7 +1149,7 @@ function FrameworkZ.CharacterDataManager:RestoreSurvivorAppearance(survivor, cha
             if itemID and itemID ~= "" and itemID ~= "None" then
                 -- (omitted verbose logging)
                 -- Create the item
-                local item = InventoryItemFactory.CreateItem(itemID)
+                local item = instanceItem(itemID)
                 if item then
                     -- Apply condition if available (pre-equip)
                     if itemCondition and item.setCondition then

@@ -612,8 +612,6 @@ function FrameworkZ.UI.CreateCharacterAppearance:addClothingOption(x, y, height,
             -- Try to get and draw texture (cached for performance)
             if not self2._textureCache then self2._textureCache = {} end
             if not self2._textureCache[itemID] then
-                print("InventoryItemFactory:", InventoryItemFactory)
-                print(itemID)
                 local previewItem = instanceItem(itemID)
                 self2._textureCache[itemID] = (previewItem and previewItem.getTexture) and previewItem:getTexture() or false
             end
@@ -982,7 +980,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(item
 
     -- Only create and set item if itemID is not nil (i.e., not "None" selection)
     if itemID and itemID ~= "" then
-        local item = InventoryItemFactory.CreateItem(itemID)
+        local item = instanceItem(itemID)
         
         if item then
             self.survivor:setWornItem(location, item)

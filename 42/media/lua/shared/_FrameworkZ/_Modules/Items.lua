@@ -126,7 +126,7 @@ function FrameworkZ.Items:CreateWorldItem(isoPlayer, fullItemID)
     if not isoPlayer then return false, "Missing ISO Player." end
     if not fullItemID then return false, "Missing full item ID." end
 
-    local worldItem = isoPlayer:getInventory():AddItem(InventoryItemFactory.CreateItem(fullItemID))
+    local worldItem = isoPlayer:getInventory():AddItem(instanceItem(fullItemID))
 
     return true, "Created world item.", worldItem
 end
