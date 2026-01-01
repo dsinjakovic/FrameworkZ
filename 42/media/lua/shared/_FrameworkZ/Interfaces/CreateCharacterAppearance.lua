@@ -967,7 +967,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(item
     -- Store selection in the selectedClothing table for character creation
     self.selectedClothing[location] = itemID
     -- Always clear the current item first
-    self.survivor:setWornItem(bodyLocation, nil)
+    self.survivor:setWornItem(ItemBodyLocation[bodyLocation:upper()], nil)
     
     -- Reset texture choices for this location to prevent bleeding between items
     self.textureChoices[location] = 0
@@ -983,7 +983,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(item
         local item = instanceItem(itemID)
         
         if item then
-            self.survivor:setWornItem(bodyLocation, item)
+            self.survivor:setWornItem(ItemBodyLocation[bodyLocation:upper()], item)
             
             -- Initialize capabilities and current visual values
             self:refreshSlotCapabilities(location)

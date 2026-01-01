@@ -475,7 +475,7 @@ local function safeGetWornItem(isoPlayer, slot)
     -- Try different slot name variations if needed
     local result = nil
     if isoPlayer.getWornItem then
-        result = isoPlayer:getWornItem(actualSlot)
+        result = isoPlayer:getWornItem(ItemBodyLocation[actualSlot:upper()])
     end
     if result then return result end
     -- Try alternative slot names for compatibility
@@ -484,7 +484,7 @@ local function safeGetWornItem(isoPlayer, slot)
         ["TorsoExtra"] = "TorsoExtraVest"
     }
     if alternativeSlots[slot] and isoPlayer.getWornItem then
-        return isoPlayer:getWornItem(alternativeSlots[slot])
+        return isoPlayer:getWornItem(ItemBodyLocation[alternativeSlots[slot]:upper()])
     end
     return nil
 end
@@ -499,7 +499,7 @@ local function safeSetWornItem(isoPlayer, slot, item)
         return true
     end
     if isoPlayer.setWornItem then
-        isoPlayer:setWornItem(slot, item)
+        isoPlayer:setWornItem(ItemBodyLocation[slot:upper()], item)
         return true
     end
     -- Try alternative slot names for compatibility
@@ -508,7 +508,7 @@ local function safeSetWornItem(isoPlayer, slot, item)
         ["TorsoExtra"] = "TorsoExtraVest"
     }
     if alternativeSlots[slot] and isoPlayer.setWornItem then
-        isoPlayer:setWornItem(alternativeSlots[slot], item)
+        isoPlayer:setWornItem(ItemBodyLocation[alternativeSlots[slot]:upper()], item)
         return true
     end
     return false
@@ -1117,7 +1117,7 @@ function FrameworkZ.Inventories:RestoreEquipment(character, inventoryData)
         for slotEnum, slotName in pairs(self.SlotLookup) do
             local slotData = getSlotDataFor(slotEnum)
             if slotName and slotData and slotData.color then
-                local wornItem = isoPlayer:getWornItem(slotName)
+                local wornItem = isoPlayer:getWornItem(ItemBodyLocation[slotName:upper()])
                 if wornItem and wornItem.getVisual and type(wornItem.getVisual) == "function" then
                     if wornItem.setCustomColor then wornItem:setCustomColor(true) end
                     if Color and Color.new and wornItem.setColor then
@@ -1210,7 +1210,7 @@ function FrameworkZ.Inventories:RestoreLogicalItems(character, logicalInventoryD
                 -- Equip the item to its saved slot
                 local equipSuccess = false
                 if worldItem:IsClothing() then
-                    isoPlayer:setWornItem(equipmentInfo.slot, worldItem)
+                    isoPlayer:setWornItem(ItemBodyLocation[equipmentInfo.slot:upper()], worldItem)
                     equipSuccess = true
                 elseif worldItem:getCategory() == "Weapon" then
                     if equipmentInfo.slot == "TwoHands" or worldItem:isTwoHandWeapon() then

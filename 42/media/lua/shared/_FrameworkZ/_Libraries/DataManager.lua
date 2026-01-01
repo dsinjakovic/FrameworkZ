@@ -467,7 +467,7 @@ function FrameworkZ.CharacterDataManager:SaveInventoryData(character)
     local equippedItems = {}
     for slotEnum, slotName in pairs(FrameworkZ.Inventories.SlotLookup) do
         if slotName then
-            local equippedItem = isoPlayer:getWornItem(slotName)
+            local equippedItem = isoPlayer:getWornItem(ItemBodyLocation[slotName:upper()])
             if equippedItem then
                 local itemData = self:ExtractItemData(equippedItem)
                 if itemData then
@@ -622,7 +622,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
     for slotEnum, slotName in pairs(FrameworkZ.Inventories.SlotLookup) do
         if characterData[slotEnum] and characterData[slotEnum].id then
             local itemData = characterData[slotEnum]
-            if not isoPlayer:getWornItem(slotName) then -- Don't overwrite if already restored
+            if not isoPlayer:getWornItem(ItemBodyLocation[slotName:upper()]) then -- Don't overwrite if already restored
                 local item = findInventoryItemByFullType(itemData.id)
                 if not item then
                     item = instanceItem(itemData.id)
@@ -657,7 +657,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
             if item then
                 -- Equip first using the item's own body location when available
                 local bodyLoc = item.getBodyLocation and item:getBodyLocation() or slotKey
-                if not isoPlayer:getWornItem(bodyLoc) then
+                if not isoPlayer:getWornItem(ItemBodyLocation[bodyLoc:upper()]) then
                     isoPlayer:setWornItem(ItemBodyLocation[bodyLoc:upper()], item)
                     -- Apply visuals after equip
                     self:RestoreItemData(item, entry)
