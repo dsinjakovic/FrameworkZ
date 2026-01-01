@@ -454,7 +454,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onMiniPaletteColorClicked(butto
     end
 
     -- Apply immediately
-    local item = self.survivor and self.survivor:getWornItem(location)
+    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[location:upper()])
     if item then
         self:applyVisualSelectionsToItem(item, location)
         if self.characterPreview then self.characterPreview:setSurvivorDesc(self.survivor) end
@@ -961,13 +961,13 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(item
     if not itemData then return end
 
     local location = itemData.location
+    local bodyLocation = ItemBodyLocation[location:upper()]
     local itemID = itemData.itemID
     
     -- Store selection in the selectedClothing table for character creation
     self.selectedClothing[location] = itemID
-    
     -- Always clear the current item first
-    self.survivor:setWornItem(location, nil)
+    self.survivor:setWornItem(bodyLocation, nil)
     
     -- Reset texture choices for this location to prevent bleeding between items
     self.textureChoices[location] = 0
@@ -983,7 +983,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(item
         local item = instanceItem(itemID)
         
         if item then
-            self.survivor:setWornItem(location, item)
+            self.survivor:setWornItem(bodyLocation, item)
             
             -- Initialize capabilities and current visual values
             self:refreshSlotCapabilities(location)
@@ -1027,7 +1027,8 @@ end
 
 -- Detect item visual capabilities for a worn slot and toggle UI controls visibility
 function FrameworkZ.UI.CreateCharacterAppearance:refreshSlotCapabilities(location)
-    local item = self.survivor and self.survivor:getWornItem(location)
+    local bodyLocation = ItemBodyLocation[location:upper()]
+    local item = self.survivor and self.survivor:getWornItem(bodyLocation)
     local panel = self.clothingPanels[location]
     local supportsColor, supportsTint, supportsDecal = false, false, false
     local currentDecal = nil
@@ -1096,7 +1097,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:refreshSlotCapabilities(locatio
         if panel.decalCombo then
             panel.decalCombo:setVisible(showDecal)
             if showDecal then
-                self:populateDecalOptionsForLocation(location)
+                self:populateDecalOptionsForLocation(ItemBodyLocation[location:upper()])
             end
         end
     end
@@ -1207,7 +1208,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClearDecalClicked(button)
     local location = button and button.clothingLocation
     if not location then return end
     self.decalValues[location] = ""
-    local item = self.survivor and self.survivor:getWornItem(location)
+    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[location:upper()])
     if item and item.getVisual and item:getVisual() and item:getVisual().setDecal then
         item:getVisual():setDecal("")
         if self.characterPreview then self.characterPreview:setSurvivorDesc(self.survivor) end
