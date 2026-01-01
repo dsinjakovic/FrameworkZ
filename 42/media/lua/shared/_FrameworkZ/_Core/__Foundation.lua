@@ -90,8 +90,9 @@
 ███████ ███████    ██     ██████  ██      
 
 
-
 --]]
+
+print("FRAMEWORKZ INIT Dodo")
 
 --! \brief Local reference to the global Events table for performance optimization.
 local Events = Events
@@ -112,9 +113,13 @@ local ModData = ModData
 local unpack = unpack
 
 FrameworkZ = FrameworkZ or {}
+print("PRINTING FRAMEWORKZ TABLE")
+print(FrameworkZ)
 
 --! \brief Contains all of the User Interfaces for FrameworkZ.
 FrameworkZ.UI = FrameworkZ.UI or {}
+print("PRINTING FRAMEWORKZ.UI TABLE")
+print(FrameworkZ.UI)
 
 --! \brief Foundational systems for FrameworkZ.
 --! \core FrameworkZ.Foundation
@@ -133,6 +138,7 @@ FrameworkZ.Foundation.Modules = FrameworkZ.Foundation.Modules or {}
 --! \brief Create a new instance of the FrameworkZ framework.
 --! \return \table The new instance of the FrameworkZ framework.
 function FrameworkZ.Foundation.New()
+    print("Creating new Foundation")
     return FrameworkZ:CreateObject(FrameworkZ.Foundation, "Foundation")
 end
 

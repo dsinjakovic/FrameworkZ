@@ -1,3 +1,7 @@
+print("PRINTING FRAMEWORKZ TABLE - characterpreview.lua")
+print(FrameworkZ)
+print("PRINTING FRAMEWORKZ.UI TABLE - characterpreview.lua")
+print(FrameworkZ.UI)
 FrameworkZ.UI.CharacterPreview = FrameworkZ.UI.CharacterPreview or {}
 FrameworkZ.Interfaces:Register(FrameworkZ.UI.CharacterPreview, "CharacterPreview")
 
