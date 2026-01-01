@@ -608,7 +608,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
                 end
                 if item then
                     -- Equip first, then apply visuals to override any equip-time randomization
-                    isoPlayer:setWornItem(slotName, item)
+                    isoPlayer:setWornItem(ItemBodyLocation[slotName:upper()], item)
                     self:RestoreItemData(item, itemData)
                     restoredCount = restoredCount + 1
                 end
@@ -631,7 +631,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
                     end
                 end
                 if item then
-                    isoPlayer:setWornItem(slotName, item)
+                    isoPlayer:setWornItem(ItemBodyLocation[slotName:upper()], item)
                     self:RestoreItemData(item, itemData)
                     legacyRestoredCount = legacyRestoredCount + 1
                 end
@@ -658,7 +658,7 @@ function FrameworkZ.CharacterDataManager:RestoreInventoryData(character, charact
                 -- Equip first using the item's own body location when available
                 local bodyLoc = item.getBodyLocation and item:getBodyLocation() or slotKey
                 if not isoPlayer:getWornItem(bodyLoc) then
-                    isoPlayer:setWornItem(bodyLoc, item)
+                    isoPlayer:setWornItem(ItemBodyLocation[bodyLoc:upper()], item)
                     -- Apply visuals after equip
                     self:RestoreItemData(item, entry)
                     createdRestoredCount = createdRestoredCount + 1
@@ -1001,13 +1001,23 @@ function FrameworkZ.CharacterDataManager:RestoreSurvivorAppearance(survivor, cha
     if not survivor or not characterData then
         return false, "Missing survivor or characterData"
     end
+    print(survivor)
+    for k,v in pairs(characterData) do print(k, v) end
 
     -- Minimal logging to avoid preview stutter when cycling
 
     -- Clear all worn items first
     if FrameworkZ.Enumerations and FrameworkZ.Enumerations.EquipmentSlots then
+
+        local valuesList = Registries.ITEM_BODY_LOCATION:values()
+
+        for i = 0, valuesList:size()-1 do
+            local loc = valuesList:get(i)
+            print(Registries.ITEM_BODY_LOCATION.get(loc))
+        end
+
         for k, v in ipairs(FrameworkZ.Enumerations.EquipmentSlots) do
-            survivor:setWornItem(v, nil)
+            survivor:setWornItem(ItemBodyLocation[v:upper()], nil)
         end
     end
 
@@ -1157,14 +1167,14 @@ function FrameworkZ.CharacterDataManager:RestoreSurvivorAppearance(survivor, cha
                     end
 
                     -- Equip first: some items randomize colors on equip; we'll override immediately after
-                    survivor:setWornItem(slotName, item)
+                    survivor:setWornItem(ItemBodyLocation[slotName:upper()], item)
 
                     -- Apply color if available, AFTER equipping to override any equip-time randomization
                     if itemColor then
                         local r = itemColor.r or 1.0
                         local g = itemColor.g or 1.0
                         local b = itemColor.b or 1.0
-                        local worn = survivor:getWornItem(slotName) or item
+                        local worn = survivor:getWornItem(ItemBodyLocation[slotName:upper()]) or item
                         if worn then
                             if worn.setCustomColor then worn:setCustomColor(true) end
                             if worn.setColor and Color and Color.new then
@@ -1188,7 +1198,7 @@ function FrameworkZ.CharacterDataManager:RestoreSurvivorAppearance(survivor, cha
 
                     -- Apply texture choice/decal if provided in data (handles non-tintable clothing skins)
                     if type(equipmentEntry) == "table" then
-                        local worn = survivor:getWornItem(slotName)
+                        local worn = survivor:getWornItem(ItemBodyLocation[slotName:upper()])
                         if worn and worn.getVisual and type(worn.getVisual) == "function" then
                             local vis = worn:getVisual()
                             if equipmentEntry.textureChoice ~= nil and vis and vis.setTextureChoice and type(vis.setTextureChoice) == "function" then

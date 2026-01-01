@@ -1028,7 +1028,7 @@ end
 -- Detect item visual capabilities for a worn slot and toggle UI controls visibility
 function FrameworkZ.UI.CreateCharacterAppearance:refreshSlotCapabilities(location)
     local bodyLocation = ItemBodyLocation[location:upper()]
-    local item = self.survivor and self.survivor:getWornItem(bodyLocation)
+    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[bodyLocation:upper()])
     local panel = self.clothingPanels[location]
     local supportsColor, supportsTint, supportsDecal = false, false, false
     local currentDecal = nil
@@ -1143,7 +1143,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:populateDecalOptionsForLocation
     local combo = panel.decalCombo
     combo.options = {}
 
-    local item = self.survivor and self.survivor:getWornItem(location)
+    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[location:upper()])
     if not item or not (item.getVisual and item:getVisual()) then
         combo:setVisible(false)
         return
@@ -1196,7 +1196,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onDecalComboChanged(combo)
     -- Persist selection ("" means clear)
     self.decalValues[location] = decalName or ""
     -- Apply immediately to worn item
-    local item = self.survivor and self.survivor:getWornItem(location)
+    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[location:upper()])
     if item and item.getVisual and item:getVisual() and item:getVisual().setDecal then
         item:getVisual():setDecal(self.decalValues[location])
         if self.characterPreview then self.characterPreview:setSurvivorDesc(self.survivor) end
@@ -1261,7 +1261,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingColorPicked(colorInfo
         panel.colorButton.colorPreview.backgroundColor = { r = self.clothingColors[location].r, g = self.clothingColors[location].g, b = self.clothingColors[location].b, a = 0.8 }
     end
     -- Apply to currently worn item immediately
-    local item = self.survivor and self.survivor:getWornItem(location)
+    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[location:upper()])
     if item then
         self:applyVisualSelectionsToItem(item, location)
         if self.characterPreview then self.characterPreview:setSurvivorDesc(self.survivor) end
