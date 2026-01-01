@@ -4,10 +4,11 @@ FrameworkZ.Interfaces:Register(FrameworkZ.UI.CreateCharacterAppearance, "CreateC
 local yOffset = 0
 
 function FrameworkZ.UI.CreateCharacterAppearance:initialise()
+    print("FrameworkZ.UI.CreateCharacterAppearance:initialise")
     ISPanel.initialise(self)
 
     local isFemale = (self.gender == "Female" and true) or (self.gender == "Male" and false)
-    self.survivor = SurvivorFactory:CreateSurvivor(SurvivorType.Neutral, isFemale)
+    self.survivor = SurvivorFactory.CreateSurvivor(SurvivorType.Neutral, isFemale)
     self.survivor:setFemale(isFemale)
     self.survivor:getHumanVisual():setSkinTextureIndex(self.skinColor)
 
@@ -611,7 +612,9 @@ function FrameworkZ.UI.CreateCharacterAppearance:addClothingOption(x, y, height,
             -- Try to get and draw texture (cached for performance)
             if not self2._textureCache then self2._textureCache = {} end
             if not self2._textureCache[itemID] then
-                local previewItem = InventoryItemFactory.CreateItem(itemID)
+                print("InventoryItemFactory:", InventoryItemFactory)
+                print(itemID)
+                local previewItem = instanceItem(itemID)
                 self2._textureCache[itemID] = (previewItem and previewItem.getTexture) and previewItem:getTexture() or false
             end
             
@@ -1335,11 +1338,12 @@ function FrameworkZ.UI.CreateCharacterAppearance:getSelectedClothing()
 end
 
 function FrameworkZ.UI.CreateCharacterAppearance:resetGender(newGender)
+    print("FrameworkZ.UI.CreateCharacterAppearance:resetGender")
     if self.survivor and self.gender ~= newGender then
         self.gender = newGender
 
         local isFemale = (self.gender == "Female" and true) or (self.gender == "Male" and false)
-        self.survivor = SurvivorFactory:CreateSurvivor(SurvivorType.Neutral, isFemale)
+        self.survivor = SurvivorFactory.CreateSurvivor(SurvivorType.Neutral, isFemale)
         self.survivor:setFemale(isFemale)
         self:onClothingChanged(self.headDropdown)
         self:onClothingChanged(self.undershirtDropdown)

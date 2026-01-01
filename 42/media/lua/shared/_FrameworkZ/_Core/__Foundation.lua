@@ -1439,9 +1439,6 @@ function FrameworkZ.Foundation:InitializeClient(isoPlayer)
                 isoPlayer:setX(FrameworkZ.Config.Options.LimboX)
                 isoPlayer:setY(FrameworkZ.Config.Options.LimboY)
                 isoPlayer:setZ(FrameworkZ.Config.Options.LimboZ)
-                isoPlayer:setLx(FrameworkZ.Config.Options.LimboX)
-                isoPlayer:setLy(FrameworkZ.Config.Options.LimboY)
-                isoPlayer:setLz(FrameworkZ.Config.Options.LimboZ)
 
                 self:InitializePlayer(isoPlayer, playerData, charactersData)
             end
@@ -1515,9 +1512,6 @@ function FrameworkZ.Foundation:InitializePlayer(isoPlayer, playerData, character
     isoPlayer:setX(x)
     isoPlayer:setY(y)
     isoPlayer:setZ(z)
-    isoPlayer:setLx(x)
-    isoPlayer:setLy(y)
-    isoPlayer:setLz(z)
 
     if isServer() then
         playerData, charactersData = self:RestorePlayer(isoPlayer, player, username)
@@ -1592,9 +1586,6 @@ function FrameworkZ.Foundation:TeleportToLimbo(isoPlayer)
     isoPlayer:setX(x)
     isoPlayer:setY(y)
     isoPlayer:setZ(z)
-    isoPlayer:setLx(x)
-    isoPlayer:setLy(y)
-    isoPlayer:setLz(z)
 
     return true
 end

@@ -1,3 +1,7 @@
+require("_FrameworkZ/init_core")
+require("_FrameworkZ/init_libraries")
+require("_FrameworkZ/init_modules")
+
 FrameworkZ.UI.Introduction = FrameworkZ.UI.Introduction or {}
 FrameworkZ.Interfaces:Register(FrameworkZ.UI.Introduction, "Introduction")
 

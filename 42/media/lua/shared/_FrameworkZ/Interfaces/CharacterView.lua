@@ -2,6 +2,7 @@ FrameworkZ.UI.CharacterView = FrameworkZ.UI.CharacterView or {}
 FrameworkZ.Interfaces:Register(FrameworkZ.UI.CharacterView, "CharacterView")
 
 function FrameworkZ.UI.CharacterView:initialise()
+    print("FrameworkZ.UI.CharacterView:initialise")
     ISPanel.initialise(self)
 
     local FONT_HEIGHT_SMALL = getTextManager():getFontHeight(UIFont.Small)
@@ -30,7 +31,7 @@ function FrameworkZ.UI.CharacterView:initialise()
     local x = self.uiHelper.GetMiddle(self.width, UIFont.Medium, self.name)
     local y = 0
 
-    self.survivor = SurvivorFactory:CreateSurvivor(SurvivorType.Neutral, isFemale)
+    self.survivor = SurvivorFactory.CreateSurvivor(SurvivorType.Neutral, isFemale)
     self.survivor:setFemale(isFemale)
 
     self.characterNameLabel = ISLabel:new(x, 0, FONT_HEIGHT_MEDIUM, self.name, 1, 1, 1, 1, UIFont.Medium, true)

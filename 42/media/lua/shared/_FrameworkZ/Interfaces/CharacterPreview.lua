@@ -1,7 +1,5 @@
-print("PRINTING FRAMEWORKZ TABLE - characterpreview.lua")
-print(FrameworkZ)
-print("PRINTING FRAMEWORKZ.UI TABLE - characterpreview.lua")
-print(FrameworkZ.UI)
+require("_FrameworkZ/init_core")
+require("_FrameworkZ/init_modules")
 FrameworkZ.UI.CharacterPreview = FrameworkZ.UI.CharacterPreview or {}
 FrameworkZ.Interfaces:Register(FrameworkZ.UI.CharacterPreview, "CharacterPreview")
 

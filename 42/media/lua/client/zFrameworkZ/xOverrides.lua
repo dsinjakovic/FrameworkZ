@@ -7,7 +7,11 @@ end
 Events.OnChatWindowInit.Add(FrameworkZ.Overrides.onChatWindowInit)
 
 ConnectToServer.OnConnected = function(self)
-    if not SystemDisabler.getAllowDebugConnections() and getDebug() and not isAdmin() and not isCoopHost() and not SystemDisabler.getOverrideServerConnectDebugCheck() then
+    print("SYSTEMDISABLER")
+    print(getDebug())
+    print(isAdmin())
+    print(isCoopHost())
+    if getDebug() and not isAdmin() and not isCoopHost() then
         forceDisconnect()
         return
     end

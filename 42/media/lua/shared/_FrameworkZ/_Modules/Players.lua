@@ -867,9 +867,6 @@ function FrameworkZ.Players:OnPostLoadCharacter(isoPlayer, player, character, ch
             isoPlayer:setX(options.SpawnX)
             isoPlayer:setY(options.SpawnY)
             isoPlayer:setZ(options.SpawnZ)
-            isoPlayer:setLx(options.SpawnX)
-            isoPlayer:setLy(options.SpawnY)
-            isoPlayer:setLz(options.SpawnZ)
 
             characterData[FZ_ENUM_CHARACTER_META_FIRST_LOAD] = false
         else
@@ -878,9 +875,6 @@ function FrameworkZ.Players:OnPostLoadCharacter(isoPlayer, player, character, ch
             isoPlayer:setX(characterData.POSITION_X)
             isoPlayer:setY(characterData.POSITION_Y)
             isoPlayer:setZ(characterData.POSITION_Z)
-            isoPlayer:setLx(characterData.POSITION_X)
-            isoPlayer:setLy(characterData.POSITION_Y)
-            isoPlayer:setLz(characterData.POSITION_Z)
             isoPlayer:setDirectionAngle(characterData.DIRECTION_ANGLE)
         end
 
@@ -982,16 +976,10 @@ function FrameworkZ.Players:LoadCharacter(username, characterData, survivorDescr
                 isoPlayer:setX(FrameworkZ.Config.Options.SpawnX)
                 isoPlayer:setY(FrameworkZ.Config.Options.SpawnY)
                 isoPlayer:setZ(FrameworkZ.Config.Options.SpawnZ)
-                isoPlayer:setLx(FrameworkZ.Config.Options.SpawnX)
-                isoPlayer:setLy(FrameworkZ.Config.Options.SpawnY)
-                isoPlayer:setLz(FrameworkZ.Config.Options.SpawnZ)
             else
                 isoPlayer:setX(characterData.POSITION_X)
                 isoPlayer:setY(characterData.POSITION_Y)
                 isoPlayer:setZ(characterData.POSITION_Z)
-                isoPlayer:setLx(characterData.POSITION_X)
-                isoPlayer:setLy(characterData.POSITION_Y)
-                isoPlayer:setLz(characterData.POSITION_Z)
                 isoPlayer:setDirectionAngle(characterData.DIRECTION_ANGLE)
             end
 

@@ -2,6 +2,7 @@ FrameworkZ.UI.LoadCharacterMenu = FrameworkZ.UI.LoadCharacterMenu or {}
 FrameworkZ.Interfaces:Register(FrameworkZ.UI.LoadCharacterMenu, "LoadCharacterMenu")
 
 function FrameworkZ.UI.LoadCharacterMenu:initialise()
+    print("FrameworkZ.UI.LoadCharacterMenu:initialise")
     ISPanel.initialise(self)
 
     local isoPlayer = self.player.isoPlayer
@@ -35,7 +36,7 @@ function FrameworkZ.UI.LoadCharacterMenu:initialise()
     local yRight = self.height / 2 - heightLeft / 2
 
     -- Create a default survivor - gender will be updated when character is set
-    self.survivor = SurvivorFactory:CreateSurvivor(SurvivorType.Neutral, false)
+    self.survivor = SurvivorFactory.CreateSurvivor(SurvivorFactory.SurvivorType.Neutral, false)
 
     self.nextButton = FrameworkZ.Interfaces:CreateButton({
         x = self.width - 30,
