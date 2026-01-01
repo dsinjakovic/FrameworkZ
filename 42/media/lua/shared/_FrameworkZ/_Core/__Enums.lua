@@ -35,21 +35,21 @@ FZ_ENUM_CHARACTER_META_ID = "ID"
 FZ_ENUM_CHARACTER_META_RECOGNIZES = "Recognizes"
 FZ_ENUM_CHARACTER_META_UID = "UID"
 
-
 -- Dodo: Maybe this should be moved to utilities? Would BodyLocations ever be needed outside of this enum? 
 
+local valuesList = Registries.ITEM_BODY_LOCATION:values()
 for i = 0, valuesList:size()-1 do
-    local loc = valuesList:get(i)                           -- e.g., "base:back"
-    local bodyLoc = Registries.ITEM_BODY_LOCATION:get(loc)  -- actual ItemBodyLocation object, e.g., "Back"
+
+    local bodyLoc = valuesList:get(i)  -- ItemBodyLocation
+    local value = bodyLoc:getTranslationName() -- "Hat", "Back", etc.
 
     -- use bodyLoc directly for constant name
     local constName = "FZ_ENUM_EQUIPMENT_SLOT_" .. tostring(bodyLoc):upper():gsub("%W", "_")
 
     -- create global constant
-    _G[constName] = bodyLoc
+    _G[constName] = value
 
-    -- add to EquipmentSlots table
-    table.insert(FrameworkZ.Enumerations.EquipmentSlots, bodyLoc)
+    FrameworkZ.Enumerations.EquipmentSlots[constName] = value
 end
 
 

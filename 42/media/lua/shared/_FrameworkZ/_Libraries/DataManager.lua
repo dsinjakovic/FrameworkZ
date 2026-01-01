@@ -1008,15 +1008,8 @@ function FrameworkZ.CharacterDataManager:RestoreSurvivorAppearance(survivor, cha
 
     -- Clear all worn items first
     if FrameworkZ.Enumerations and FrameworkZ.Enumerations.EquipmentSlots then
-
-        local valuesList = Registries.ITEM_BODY_LOCATION:values()
-
-        for i = 0, valuesList:size()-1 do
-            local loc = valuesList:get(i)
-            print(Registries.ITEM_BODY_LOCATION.get(loc))
-        end
-
         for k, v in ipairs(FrameworkZ.Enumerations.EquipmentSlots) do
+            print(v)
             survivor:setWornItem(ItemBodyLocation[v:upper()], nil)
         end
     end
