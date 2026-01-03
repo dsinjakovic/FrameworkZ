@@ -45,7 +45,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:initialise()
     local itemSpacing = 8
     local groupSpacing = 35
     
-    self.factionsClothing = FrameworkZ.Factions:GetFactionByID(self.faction).clothing
+    self.factionsClothing = FrameworkZ.Factions:GetFactionByID(self.faction).clothing -- changed to inlcude labels and created structure that allows us to fill clothing table with more information. Look at FACTION.clothing in factions lua (civilian.lua for example) in the b42 version of the gamemodes
     self.initialFaction = nil
 
     yOffset = 30
@@ -657,6 +657,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:addClothingOption(x, y, height,
                 -- First item is "None"
                 if itemIndex == 0 then
                     self2.selectedItemID = nil
+                    print("first test")
                     self2.parentWindow:onClothingSelectionChanged({location = self2.clothingLocation, itemID = nil, displayName = "None"})
                 else
                     -- Get the actual item ID by counting through the table
@@ -664,6 +665,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:addClothingOption(x, y, height,
                     for itemID, displayName in pairs(self2.clothingTable) do
                         if counter == itemIndex then
                             self2.selectedItemID = itemID
+                            print("2nd test")
                             self2.parentWindow:onClothingSelectionChanged({location = self2.clothingLocation, itemID = itemID, displayName = displayName})
                             break
                         end
@@ -944,6 +946,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingButtonClicked(button)
     end
 
     -- Trigger clothing change
+    print("3rd test")
     self:onClothingSelectionChanged(button.clothingData)
 end
 
@@ -953,21 +956,33 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingChanged(dropdown)
 
     local dropdownData = dropdown:getOptionData(dropdown.selected)
     if dropdownData then
+        print("4th test")
         self:onClothingSelectionChanged(dropdownData)
     end
 end
 
 function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(itemData)
-    if not itemData then return end
-
-    local location = itemData.location
-    local bodyLocation = ItemBodyLocation[location:upper()]
+    if not itemData then return end 
+    FrameworkZ.Utilities:PrintTable(itemData)
     local itemID = itemData.itemID
+
+    local item, location, bodyLocation
     
+    if not itemData.location then
+        item = instanceItem(itemID)
+        bodyLocation = item:getBodyLocation()
+        location = bodyLocation:getTranslationName()
+    else
+        location = itemData.location
+        bodyLocation = ItemBodyLocation[location:upper()]
+    end
+
+    print(location)
+    print(bodyLocation)
     -- Store selection in the selectedClothing table for character creation
     self.selectedClothing[location] = itemID
     -- Always clear the current item first
-    self.survivor:setWornItem(ItemBodyLocation[bodyLocation:upper()], nil)
+    self.survivor:setWornItem(bodyLocation, nil)
     
     -- Reset texture choices for this location to prevent bleeding between items
     self.textureChoices[location] = 0
@@ -983,7 +998,7 @@ function FrameworkZ.UI.CreateCharacterAppearance:onClothingSelectionChanged(item
         local item = instanceItem(itemID)
         
         if item then
-            self.survivor:setWornItem(ItemBodyLocation[bodyLocation:upper()], item)
+            self.survivor:setWornItem(bodyLocation, item)
             
             -- Initialize capabilities and current visual values
             self:refreshSlotCapabilities(location)
@@ -1028,7 +1043,7 @@ end
 -- Detect item visual capabilities for a worn slot and toggle UI controls visibility
 function FrameworkZ.UI.CreateCharacterAppearance:refreshSlotCapabilities(location)
     local bodyLocation = ItemBodyLocation[location:upper()]
-    local item = self.survivor and self.survivor:getWornItem(ItemBodyLocation[bodyLocation:upper()])
+    local item = self.survivor and self.survivor:getWornItem(bodyLocation)
     local panel = self.clothingPanels[location]
     local supportsColor, supportsTint, supportsDecal = false, false, false
     local currentDecal = nil

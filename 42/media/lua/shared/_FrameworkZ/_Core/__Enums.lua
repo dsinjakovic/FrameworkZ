@@ -44,7 +44,7 @@ for i = 0, valuesList:size()-1 do
     local value = bodyLoc:getTranslationName() -- "Hat", "Back", etc.
 
     -- use bodyLoc directly for constant name
-    local constName = "FZ_ENUM_EQUIPMENT_SLOT_" .. tostring(bodyLoc):upper():gsub("%W", "_")
+    local constName = "FZ_ENUM_EQUIPMENT_SLOT_" .. tostring(value):upper():gsub("%W", "_")
 
     -- create global constant
     _G[constName] = value
